@@ -5,7 +5,27 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/blue"
+    >
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/main_IMG_cake"
+        android:layout_width="@dimen/player_height"
+        android:layout_height="@dimen/player_width"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/cake" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/main_IMG_player"
+        android:layout_width="@dimen/player_height"
+        android:layout_height="@dimen/player_width"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/margin_bottom_player"
+        app:srcCompat="@drawable/player" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/main_FAB_left"
