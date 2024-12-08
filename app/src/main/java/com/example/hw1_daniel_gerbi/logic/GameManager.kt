@@ -1,8 +1,8 @@
 package com.example.hw1_daniel_gerbi.logic
 
 class GameManager(private val lifeCount: Int = 3) {
-    private var playerPosition = 1
-    var wrongPosition = 0
+    var playerPosition = 1
+    var hitPosition = 0
     private var cakesVisibility = BooleanArray(15) { true }
 
 
@@ -26,7 +26,7 @@ class GameManager(private val lifeCount: Int = 3) {
     }
 
     val isGameOver: Boolean
-        get() = wrongPosition == lifeCount
+        get() = hitPosition == lifeCount
 
     fun isCakeVisible(index: Int): Boolean {
         return cakesVisibility[index]
@@ -43,7 +43,7 @@ class GameManager(private val lifeCount: Int = 3) {
 
     fun checkPosition(position: Int) {
         if (!isCorrectPosition(position)) {
-            wrongPosition++
+            hitPosition++
         }
     }
 
@@ -52,4 +52,14 @@ class GameManager(private val lifeCount: Int = 3) {
         cakesVisibility[randomIndex] = false
     }
 
+    fun hasCollision(): Boolean {
+        for (i in cakesVisibility.indices) {
+            if (cakesVisibility[i] && playerPosition == i) {
+                cakesVisibility[i] = false
+                checkPosition(playerPosition)
+                return true
+            }
+        }
+        return false
+    }
 }

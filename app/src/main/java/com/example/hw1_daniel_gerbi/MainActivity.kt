@@ -54,6 +54,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
         main_FAB_left.setOnClickListener {
             movePlayerLeft()
         }
+        refreshUI()
     }
 
     private fun movePlayerLeft() {
@@ -73,10 +74,12 @@ override fun onCreate(savedInstanceState: Bundle?) {
     private fun refreshUI() {
         if(gameManager.isGameOver) {
             showGameOverMessage()
+            finish()
         } else {
             updateHearts()
             updatePlayers()
             updateCakes()
+            checkForCollision()
         }
     }
 
@@ -105,10 +108,16 @@ override fun onCreate(savedInstanceState: Bundle?) {
     }
 
     private fun updateHearts() {
-        if (gameManager.wrongPosition != 0) {
-            main_IMG_hearts[main_IMG_hearts.size - gameManager.wrongPosition].visibility =
+        if (gameManager.hitPosition != 0) {
+            main_IMG_hearts[main_IMG_hearts.size - gameManager.hitPosition].visibility =
                 View.INVISIBLE
         }
     }
 
+    private fun checkForCollision() {
+        if (gameManager.hasCollision()) {
+            gameManager.checkPosition(gameManager.playerPosition)
+            refreshUI()
+        }
+    }
 }
