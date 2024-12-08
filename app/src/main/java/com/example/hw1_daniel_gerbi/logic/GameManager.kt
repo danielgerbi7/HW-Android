@@ -4,7 +4,8 @@ class GameManager(private val lifeCount: Int = 3) {
     var playerPosition = 1
     var hitPosition = 0
     private var cakesVisibility = BooleanArray(15) { true }
-
+    val cakePositions = IntArray(15) { (0..2).random() }
+    private val totalColums = 3
 
     fun canMovePlayerLeft(): Boolean {
         return playerPosition > 0
@@ -36,14 +37,34 @@ class GameManager(private val lifeCount: Int = 3) {
         return playerPosition == index
     }
 
+    fun moveCakesDown() {
+        for (i in cakePositions.indices) {
+            if (cakesVisibility[i]) {
+                if (cakePositions[i] == 2) {
+                    cakesVisibility[i] = false
+                } else {
+                    cakePositions[i] = cakePositions[i] + 1
+                }
+            }
+        }
+    }
+
     private fun isCorrectPosition(position: Int): Boolean {
         val validPositions = listOf(0, 1, 2)
         return validPositions.contains(position)
     }
 
     fun checkPosition(position: Int) {
-        if (!isCorrectPosition(position)) {
+        if (position !in 0..2) {
             hitPosition++
+        }
+    }
+
+    fun showRandomCake() {
+        val randomIndex = cakesVisibility.indices.filter { !cakesVisibility[it] }.randomOrNull()
+        randomIndex?.let {
+            cakesVisibility[it] = true
+            cakePositions[it] = (0..2).random()
         }
     }
 
@@ -53,10 +74,8 @@ class GameManager(private val lifeCount: Int = 3) {
     }
 
     fun hasCollision(): Boolean {
-        for (i in cakesVisibility.indices) {
-            if (cakesVisibility[i] && playerPosition == i) {
-                cakesVisibility[i] = false
-                checkPosition(playerPosition)
+        for (i in cakePositions.indices) {
+            if (cakePositions[i] == playerPosition && cakesVisibility[i]) {
                 return true
             }
         }

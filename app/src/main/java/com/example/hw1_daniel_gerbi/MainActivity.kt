@@ -2,6 +2,8 @@ package com.example.hw1_daniel_gerbi
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,13 +20,24 @@ class MainActivity : AppCompatActivity() {
     private lateinit var main_IMG_players: Array<AppCompatImageView>
     private lateinit var main_IMG_cakes: Array<AppCompatImageView>
     private lateinit var gameManager: GameManager
-override fun onCreate(savedInstanceState: Bundle?) {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         findViews()
         gameManager = GameManager(main_IMG_hearts.size)
         initViews()
-}
+
+        val handler = Handler(Looper.getMainLooper())
+        val runnable = object : Runnable {
+            override fun run() {
+                refreshUI()
+                handler.postDelayed(this, 500)
+            }
+        }
+        handler.post(runnable)
+
+    }
     private fun findViews() {
 
         main_IMG_hearts = arrayOf(
@@ -56,6 +69,20 @@ override fun onCreate(savedInstanceState: Bundle?) {
         }
         refreshUI()
     }
+    private fun refreshUI() {
+        if(gameManager.isGameOver) {
+            showGameOverMessage()
+            finish()
+        } else {
+            gameManager.moveCakesDown()
+            gameManager.showRandomCake()
+
+            updateHearts()
+            updatePlayers()
+            updateCakes()
+            checkForCollision()
+        }
+    }
 
     private fun movePlayerLeft() {
         if(gameManager.canMovePlayerLeft()) {
@@ -71,17 +98,6 @@ override fun onCreate(savedInstanceState: Bundle?) {
         }
     }
 
-    private fun refreshUI() {
-        if(gameManager.isGameOver) {
-            showGameOverMessage()
-            finish()
-        } else {
-            updateHearts()
-            updatePlayers()
-            updateCakes()
-            checkForCollision()
-        }
-    }
 
     private fun showGameOverMessage() {
         Toast.makeText(this, "😭 Game Over!", Toast.LENGTH_SHORT).show()
@@ -101,6 +117,12 @@ override fun onCreate(savedInstanceState: Bundle?) {
         for (i in main_IMG_cakes.indices) {
             if (gameManager.isCakeVisible(i)) {
                 main_IMG_cakes[i].visibility = View.VISIBLE
+                val position = gameManager.cakePositions[i]
+                when (position) {
+                    0 -> main_IMG_cakes[i].x = 0f
+                    1 -> main_IMG_cakes[i].x = 500f
+                    2 -> main_IMG_cakes[i].x = 1000f
+                }
             } else {
                 main_IMG_cakes[i].visibility = View.INVISIBLE
             }
