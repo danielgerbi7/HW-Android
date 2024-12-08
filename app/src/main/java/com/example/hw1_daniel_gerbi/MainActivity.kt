@@ -3,8 +3,11 @@ package com.example.hw1_daniel_gerbi
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
+import com.example.hw1_daniel_gerbi.logic.GameManager
+import com.example.hw1_daniel_gerbi.utilities.Constants
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 
 class MainActivity : AppCompatActivity() {
@@ -14,12 +17,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var main_FAB_left: ExtendedFloatingActionButton
     private lateinit var main_IMG_players: Array<AppCompatImageView>
     private lateinit var main_IMG_cakes: Array<AppCompatImageView>
-
+    private lateinit var gameManager: GameManager
 override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         findViews()
+        gameManager = GameManager(main_IMG_hearts.size)
         initViews()
 }
     private fun findViews() {
@@ -68,10 +71,8 @@ override fun onCreate(savedInstanceState: Bundle?) {
     }
 
     private fun refreshUI() {
-        if(gameManager.isGameOver()) {
-            changeActivity("😭 Game Over! ")
-        } else if (gameManager.isGameEnded()) {
-            changeActivity("🥳You Won!")
+        if(gameManager.isGameOver) {
+            showGameOverMessage()
         } else {
             updateHearts()
             updatePlayers()
@@ -79,17 +80,12 @@ override fun onCreate(savedInstanceState: Bundle?) {
         }
     }
 
-    private fun changeActivity(message: String) {
-        val intent = Intent(this, EndActivity::class.java)
-        var bundle = Bundle()
-        bundle.putString(Constants.BundleKeys.STATUS_KEY, message)
-        intent.putExtras(bundle)
-        startActivity(intent)
-        finish()
+    private fun showGameOverMessage() {
+        Toast.makeText(this, "😭 Game Over!", Toast.LENGTH_SHORT).show()
     }
 
     private fun updatePlayers() {
-        for (i in 0 until main_IMG_players.size) {
+        for (i in main_IMG_players.indices) {
             if (gameManager.isPlayerVisible(i)) {
                 main_IMG_players[i].visibility = View.VISIBLE
             } else {
@@ -99,7 +95,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
     }
 
     private fun updateCakes() {
-        for (i in 0 until main_IMG_cakes.size) {
+        for (i in main_IMG_cakes.indices) {
             if (gameManager.isCakeVisible(i)) {
                 main_IMG_cakes[i].visibility = View.VISIBLE
             } else {
@@ -109,8 +105,8 @@ override fun onCreate(savedInstanceState: Bundle?) {
     }
 
     private fun updateHearts() {
-        if (gameManager.wrongAnswers != 0) {
-            main_IMG_hearts[main_IMG_hearts.size - gameManager.wrongAnswers].visibility =
+        if (gameManager.wrongPosition != 0) {
+            main_IMG_hearts[main_IMG_hearts.size - gameManager.wrongPosition].visibility =
                 View.INVISIBLE
         }
     }
