@@ -1,6 +1,11 @@
 package com.example.hw1_daniel_gerbi.logic
 
+import android.util.Log
+
 class GameManager(private val lifeCount: Int = 3, private val numOfLanes : Int = 3) {
+
+    var score: Int = 0
+        private set
 
     private var playerPosition = 1
     var hitPosition = 0
@@ -52,20 +57,11 @@ class GameManager(private val lifeCount: Int = 3, private val numOfLanes : Int =
         return array
     }
 
-    private fun hasCollision(): Boolean {
-        for (row in 0 until 5) {
-            for (col in 0 until 3) {
-                if (cakeMatrix[row][col] && col == playerPosition && row == 4) {
-                    return true
-                }
-            }
+    fun checkCollision(): Boolean {
+        if (cakeMatrix[4][playerPosition]) {
+            hitPosition++
+            return true
         }
         return false
     }
-
-
-
-
-
-
 }

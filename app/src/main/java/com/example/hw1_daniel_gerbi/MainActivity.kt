@@ -14,10 +14,13 @@ import androidx.core.os.postDelayed
 import com.example.hw1_daniel_gerbi.logic.GameManager
 import com.example.hw1_daniel_gerbi.utilities.Constants
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.textview.MaterialTextView
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var main_IMG_hearts: Array<AppCompatImageView>
+
+    private lateinit var main_LBL_score: MaterialTextView
 
     private lateinit var main_FAB_right: ExtendedFloatingActionButton
 
@@ -31,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     val handler = Handler(Looper.getMainLooper())
 
-    val runnable = object : Runnable {
+    private val runnable = object : Runnable {
         override fun run() {
             gameManager.moveCakesDown()
             refreshUI()
@@ -48,6 +51,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun findViews() {
+
+        main_LBL_score = findViewById(R.id.main_LBL_score)
 
         main_IMG_hearts = arrayOf(
             findViewById(R.id.main_IMG_heart1),
@@ -94,6 +99,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+
+        main_LBL_score.text = gameManager.score.toString()
+
         main_FAB_right.setOnClickListener {
             movePlayerRight()
         }
@@ -110,15 +118,10 @@ class MainActivity : AppCompatActivity() {
         } else {
             updateCakes()
             updatePlayers()
-            //updateHearts()
-//            if (gameManager.hasCollision()) {
-//                gameManager.hitPosition++
-//                if (gameManager.isGameOver) {
-//                    showGameOverMessage()
-//                }
+            gameManager.checkCollision()
+            updateHearts()
         }
     }
-
     private fun movePlayerLeft() {
         if (gameManager.canMovePlayerLeft()) {
             gameManager.movePlayerLeft()
@@ -165,5 +168,16 @@ class MainActivity : AppCompatActivity() {
                 View.INVISIBLE
             }
         }
+
+    private fun changeActivity(message: String, score: Int) {
+        val intent = Intent(this, ScoreActivity::class.java)
+        var bundle = Bundle()
+        bundle.putInt(Constants.BundleKeys.SCORE_KEY, score)
+        bundle.putString(Constants.BundleKeys.STATUS_KEY, message)
+        intent.putExtras(bundle)
+        startActivity(intent)
+        finish()
+    }
+
 }
 
