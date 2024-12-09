@@ -7,7 +7,7 @@ class GameManager(private val lifeCount: Int = 3, private val numOfLanes : Int =
     var score: Int = 0
         private set
 
-    private var playerPosition = 1
+    var playerPosition = 1
     var hitPosition = 0
 
     val cakeMatrix: Array<Array<Boolean>> = getRandomMatrix()

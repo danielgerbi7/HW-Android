@@ -116,8 +116,8 @@ class MainActivity : AppCompatActivity() {
         if (gameManager.isGameOver) {
             showGameOverMessage()
         } else {
-            updateCakes()
             updatePlayers()
+            updateCakes()
             gameManager.checkCollision()
             updateHearts()
         }
@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun updatePlayers() {
         for (i in main_IMG_players.indices) {
-            if (gameManager.isPlayerVisible(i)) {
+            if (i == gameManager.playerPosition) {
                 main_IMG_players[i].visibility = View.VISIBLE
             } else {
                 main_IMG_players[i].visibility = View.INVISIBLE
@@ -169,15 +169,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-    private fun changeActivity(message: String, score: Int) {
-        val intent = Intent(this, ScoreActivity::class.java)
-        var bundle = Bundle()
-        bundle.putInt(Constants.BundleKeys.SCORE_KEY, score)
-        bundle.putString(Constants.BundleKeys.STATUS_KEY, message)
-        intent.putExtras(bundle)
-        startActivity(intent)
-        finish()
-    }
+//    private fun changeActivity(message: String, score: Int) {
+//        val intent = Intent(this, ScoreActivity::class.java)
+//        var bundle = Bundle()
+//        bundle.putInt(Constants.BundleKeys.SCORE_KEY, score)
+//        bundle.putString(Constants.BundleKeys.STATUS_KEY, message)
+//        intent.putExtras(bundle)
+//        startActivity(intent)
+//        finish()
+//    }
 
 }
 
