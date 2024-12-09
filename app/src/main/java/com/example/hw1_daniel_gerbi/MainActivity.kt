@@ -4,13 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
-import android.widget.GridLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.core.os.postDelayed
 import com.example.hw1_daniel_gerbi.logic.GameManager
 import com.example.hw1_daniel_gerbi.utilities.Constants
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -115,10 +112,16 @@ class MainActivity : AppCompatActivity() {
     private fun refreshUI() {
         if (gameManager.isGameOver) {
             showGameOverMessage()
+            changeActivity("😭Game Over!", gameManager.score)
         } else {
             updatePlayers()
             updateCakes()
-            gameManager.checkCollision()
+            if(gameManager.checkCollision()){
+                Toast.makeText(this, "😒 hit!", Toast.LENGTH_SHORT).show()
+                updateHearts()
+            }
+            gameManager.updateScore()
+            main_LBL_score.text = gameManager.score.toString()
             updateHearts()
         }
     }
@@ -169,15 +172,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-//    private fun changeActivity(message: String, score: Int) {
-//        val intent = Intent(this, ScoreActivity::class.java)
-//        var bundle = Bundle()
-//        bundle.putInt(Constants.BundleKeys.SCORE_KEY, score)
-//        bundle.putString(Constants.BundleKeys.STATUS_KEY, message)
-//        intent.putExtras(bundle)
-//        startActivity(intent)
-//        finish()
-//    }
+    private fun changeActivity(message: String, score: Int) {
+        val intent = Intent(this, ScoreActivity::class.java)
+        var bundle = Bundle()
+        bundle.putInt(Constants.BundleKeys.SCORE_KEY, score)
+        bundle.putString(Constants.BundleKeys.STATUS_KEY, message)
+        intent.putExtras(bundle)
+        startActivity(intent)
+        finish()
+    }
 
 }
 

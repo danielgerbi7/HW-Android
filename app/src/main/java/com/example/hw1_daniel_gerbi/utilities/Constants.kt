@@ -5,4 +5,9 @@ class Constants {
         const val STATUS_KEY :String = "STATUS_KEY"
         const val SCORE_KEY :String = "SCORE_KEY"
     }
+
+    object GameLogic {
+        const val AVOID_POINTS = 10
+    }
+
 }

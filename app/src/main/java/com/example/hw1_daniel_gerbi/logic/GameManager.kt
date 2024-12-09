@@ -1,6 +1,6 @@
 package com.example.hw1_daniel_gerbi.logic
 
-import android.util.Log
+import com.example.hw1_daniel_gerbi.utilities.Constants
 
 class GameManager(private val lifeCount: Int = 3, private val numOfLanes : Int = 3) {
 
@@ -23,10 +23,6 @@ class GameManager(private val lifeCount: Int = 3, private val numOfLanes : Int =
     fun movePlayerLeft() {
         if (canMovePlayerLeft())
             playerPosition--
-    }
-
-    fun isPlayerVisible(index: Int): Boolean {
-        return index == playerPosition
     }
 
     fun movePlayerRight() {
@@ -64,4 +60,9 @@ class GameManager(private val lifeCount: Int = 3, private val numOfLanes : Int =
         }
         return false
     }
+
+    fun updateScore() {
+        score += Constants.GameLogic.AVOID_POINTS
+    }
+
 }
