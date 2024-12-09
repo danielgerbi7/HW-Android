@@ -1,11 +1,11 @@
 package com.example.hw1_daniel_gerbi.logic
 
-class GameManager(private val lifeCount: Int = 3) {
-    var playerPosition = 1
+class GameManager(private val lifeCount: Int = 3, private val numOfLanes : Int = 3) {
+
+    private var playerPosition = 1
     var hitPosition = 0
-    private var cakesVisibility = BooleanArray(15) { true }
-    val cakePositions = IntArray(15) { (0..2).random() }
-    private val totalColums = 3
+
+    val cakeMatrix: Array<Array<Boolean>> = getRandomMatrix()
 
     fun canMovePlayerLeft(): Boolean {
         return playerPosition > 0
@@ -20,6 +20,9 @@ class GameManager(private val lifeCount: Int = 3) {
             playerPosition--
     }
 
+    fun isPlayerVisible(index: Int): Boolean {
+        return index == playerPosition
+    }
 
     fun movePlayerRight() {
         if (canMovePlayerRight())
@@ -29,56 +32,40 @@ class GameManager(private val lifeCount: Int = 3) {
     val isGameOver: Boolean
         get() = hitPosition == lifeCount
 
-    fun isCakeVisible(index: Int): Boolean {
-        return cakesVisibility[index]
-    }
-
-    fun isPlayerVisible(index: Int): Boolean {
-        return playerPosition == index
+    private fun getRandomMatrix() : Array<Array<Boolean>>{
+        return Array(5) {  getRandomBooleanArray(numOfLanes) }
     }
 
     fun moveCakesDown() {
-        for (i in cakePositions.indices) {
-            if (cakesVisibility[i]) {
-                if (cakePositions[i] == 2) {
-                    cakesVisibility[i] = false
-                } else {
-                    cakePositions[i] = cakePositions[i] + 1
-                }
+        for (row in 4 downTo 1) {
+            for (col in 0 until 3) {
+                    cakeMatrix[row][col] = cakeMatrix[row - 1][col]
             }
         }
+        cakeMatrix[0] = getRandomBooleanArray(numOfLanes)
     }
 
-    private fun isCorrectPosition(position: Int): Boolean {
-        val validPositions = listOf(0, 1, 2)
-        return validPositions.contains(position)
+    private fun getRandomBooleanArray(size: Int): Array<Boolean> {
+        val array = Array(size) { false }
+        val randomIndex = (0 until size).random()
+        array[randomIndex] = true
+        return array
     }
 
-    fun checkPosition(position: Int) {
-        if (position !in 0..2) {
-            hitPosition++
-        }
-    }
-
-    fun showRandomCake() {
-        val randomIndex = cakesVisibility.indices.filter { !cakesVisibility[it] }.randomOrNull()
-        randomIndex?.let {
-            cakesVisibility[it] = true
-            cakePositions[it] = (0..2).random()
-        }
-    }
-
-    fun hideRandomCake() {
-        val randomIndex = cakesVisibility.indices.random()
-        cakesVisibility[randomIndex] = false
-    }
-
-    fun hasCollision(): Boolean {
-        for (i in cakePositions.indices) {
-            if (cakePositions[i] == playerPosition && cakesVisibility[i]) {
-                return true
+    private fun hasCollision(): Boolean {
+        for (row in 0 until 5) {
+            for (col in 0 until 3) {
+                if (cakeMatrix[row][col] && col == playerPosition && row == 4) {
+                    return true
+                }
             }
         }
         return false
     }
+
+
+
+
+
+
 }

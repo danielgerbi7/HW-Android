@@ -4,10 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
+import android.widget.GridLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.os.postDelayed
 import com.example.hw1_daniel_gerbi.logic.GameManager
 import com.example.hw1_daniel_gerbi.utilities.Constants
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -15,11 +18,26 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 class MainActivity : AppCompatActivity() {
 
     private lateinit var main_IMG_hearts: Array<AppCompatImageView>
+
     private lateinit var main_FAB_right: ExtendedFloatingActionButton
+
     private lateinit var main_FAB_left: ExtendedFloatingActionButton
+
     private lateinit var main_IMG_players: Array<AppCompatImageView>
-    private lateinit var main_IMG_cakes: Array<AppCompatImageView>
+
+    private lateinit var main_IMG_cakes: Array<Array<AppCompatImageView>>
+
     private lateinit var gameManager: GameManager
+
+    val handler = Handler(Looper.getMainLooper())
+
+    val runnable = object : Runnable {
+        override fun run() {
+            gameManager.moveCakesDown()
+            refreshUI()
+            handler.postDelayed(this, 1000)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,17 +45,8 @@ class MainActivity : AppCompatActivity() {
         findViews()
         gameManager = GameManager(main_IMG_hearts.size)
         initViews()
-
-        val handler = Handler(Looper.getMainLooper())
-        val runnable = object : Runnable {
-            override fun run() {
-                refreshUI()
-                handler.postDelayed(this, 500)
-            }
-        }
-        handler.post(runnable)
-
     }
+
     private fun findViews() {
 
         main_IMG_hearts = arrayOf(
@@ -54,50 +63,75 @@ class MainActivity : AppCompatActivity() {
             findViewById(R.id.main_IMG_player2),
             findViewById(R.id.main_IMG_player3)
         )
-        main_IMG_cakes = Array(15) { index ->
-            val resourceId = resources.getIdentifier("main_IMG_cake${index + 1}", "id", packageName)
-            findViewById(resourceId)
-        }
+        main_IMG_cakes = arrayOf(
+            arrayOf(
+                findViewById(R.id.main_IMG_cake1),
+                findViewById(R.id.main_IMG_cake2),
+                findViewById(R.id.main_IMG_cake3)
+            ),
+            arrayOf(
+                findViewById(R.id.main_IMG_cake4),
+                findViewById(R.id.main_IMG_cake5),
+                findViewById(R.id.main_IMG_cake6)
+            ),
+            arrayOf(
+                findViewById(R.id.main_IMG_cake7),
+                findViewById(R.id.main_IMG_cake8),
+                findViewById(R.id.main_IMG_cake9)
+            ),
+            arrayOf(
+                findViewById(R.id.main_IMG_cake10),
+                findViewById(R.id.main_IMG_cake11),
+                findViewById(R.id.main_IMG_cake12)
+            ),
+            arrayOf(
+                findViewById(R.id.main_IMG_cake13),
+                findViewById(R.id.main_IMG_cake14),
+                findViewById(R.id.main_IMG_cake15)
+            )
+        )
+
     }
+
     private fun initViews() {
         main_FAB_right.setOnClickListener {
             movePlayerRight()
         }
-
         main_FAB_left.setOnClickListener {
             movePlayerLeft()
         }
+        handler.postDelayed(runnable, 1000)
         refreshUI()
     }
-    private fun refreshUI() {
-        if(gameManager.isGameOver) {
-            showGameOverMessage()
-            finish()
-        } else {
-            gameManager.moveCakesDown()
-            gameManager.showRandomCake()
 
-            updateHearts()
-            updatePlayers()
+    private fun refreshUI() {
+        if (gameManager.isGameOver) {
+            showGameOverMessage()
+        } else {
             updateCakes()
-            checkForCollision()
+            updatePlayers()
+            //updateHearts()
+//            if (gameManager.hasCollision()) {
+//                gameManager.hitPosition++
+//                if (gameManager.isGameOver) {
+//                    showGameOverMessage()
+//                }
         }
     }
 
     private fun movePlayerLeft() {
-        if(gameManager.canMovePlayerLeft()) {
+        if (gameManager.canMovePlayerLeft()) {
             gameManager.movePlayerLeft()
             refreshUI()
         }
     }
 
     private fun movePlayerRight() {
-        if(gameManager.canMovePlayerRight()) {
+        if (gameManager.canMovePlayerRight()) {
             gameManager.movePlayerRight()
             refreshUI()
         }
     }
-
 
     private fun showGameOverMessage() {
         Toast.makeText(this, "😭 Game Over!", Toast.LENGTH_SHORT).show()
@@ -114,17 +148,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateCakes() {
-        for (i in main_IMG_cakes.indices) {
-            if (gameManager.isCakeVisible(i)) {
-                main_IMG_cakes[i].visibility = View.VISIBLE
-                val position = gameManager.cakePositions[i]
-                when (position) {
-                    0 -> main_IMG_cakes[i].x = 0f
-                    1 -> main_IMG_cakes[i].x = 500f
-                    2 -> main_IMG_cakes[i].x = 1000f
+        for (row in 0 until 5) {
+            for (col in 0 until 3) {
+                if (gameManager.cakeMatrix[row][col]) {
+                    main_IMG_cakes[row][col].visibility = View.VISIBLE
+                } else {
+                    main_IMG_cakes[row][col].visibility = View.INVISIBLE
                 }
-            } else {
-                main_IMG_cakes[i].visibility = View.INVISIBLE
             }
         }
     }
@@ -133,13 +163,7 @@ class MainActivity : AppCompatActivity() {
         if (gameManager.hitPosition != 0) {
             main_IMG_hearts[main_IMG_hearts.size - gameManager.hitPosition].visibility =
                 View.INVISIBLE
+            }
         }
-    }
-
-    private fun checkForCollision() {
-        if (gameManager.hasCollision()) {
-            gameManager.checkPosition(gameManager.playerPosition)
-            refreshUI()
-        }
-    }
 }
+
