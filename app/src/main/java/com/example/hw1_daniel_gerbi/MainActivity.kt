@@ -33,9 +33,9 @@ class MainActivity : AppCompatActivity() {
 
     private val runnable = object : Runnable {
         override fun run() {
+            handler.postDelayed(this, 1000)
             gameManager.moveCakesDown()
             refreshUI()
-            handler.postDelayed(this, 1000)
         }
     }
 
@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity() {
             updatePlayers()
             updateCakes()
             if(gameManager.checkCollision()){
-                Toast.makeText(this, "😒 hit!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "You ate the cakes , it's not healthy!", Toast.LENGTH_SHORT).show()
                 updateHearts()
             }
             gameManager.updateScore()
@@ -160,8 +160,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateCakes() {
-        for (row in 0 until 5) {
-            for (col in 0 until 3) {
+        for (row in main_IMG_cakes.indices) {
+            for (col in main_IMG_cakes[row].indices) {
                 if (gameManager.cakeMatrix[row][col]) {
                     main_IMG_cakes[row][col].visibility = View.VISIBLE
                 } else {

@@ -34,7 +34,11 @@ class GameManager(private val lifeCount: Int = 3, private val numOfLanes : Int =
         get() = hitPosition == lifeCount
 
     private fun getRandomMatrix() : Array<Array<Boolean>>{
-        return Array(5) {  getRandomBooleanArray(numOfLanes) }
+        val arr: Array<Array<Boolean>> = Array(5) { Array(numOfLanes) { false } }
+        for(i in 0..2){
+            arr[i] = getRandomBooleanArray(numOfLanes)
+        }
+        return arr
     }
 
     fun moveCakesDown() {
@@ -54,7 +58,7 @@ class GameManager(private val lifeCount: Int = 3, private val numOfLanes : Int =
     }
 
     fun checkCollision(): Boolean {
-        if (cakeMatrix[4][playerPosition]) {
+        if (cakeMatrix[3][playerPosition]) {
             hitPosition++
             return true
         }
