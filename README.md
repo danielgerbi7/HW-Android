@@ -1,3 +1,5 @@
+## Sweet Sprint App
+
 Welcome to **My Android App**! This is an Android application built with Android Studio as Home Work1 of afeka's class.
 
 ## Author
