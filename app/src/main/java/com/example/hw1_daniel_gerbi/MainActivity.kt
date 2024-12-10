@@ -109,10 +109,16 @@ class MainActivity : AppCompatActivity() {
         refreshUI()
     }
 
+    override fun onStop() {
+        super.onStop()
+        handler.removeCallbacks(runnable)
+    }
+
     private fun refreshUI() {
         if (gameManager.isGameOver) {
             showGameOverMessage()
-            changeActivity("😭Game Over!", gameManager.score)
+            handler.removeCallbacks(runnable)
+            changeActivity("Game Over! 😭 ", gameManager.score)
         } else {
             updatePlayers()
             updateCakes()

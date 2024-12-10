@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue"
+    android:background="@drawable/treadmill"
     tools:context=".MainActivity">
 
     <com.google.android.material.textview.MaterialTextView
@@ -57,7 +57,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/default_margin"
-        android:backgroundTint="@color/red"
+        android:backgroundTint="@color/blue"
         android:clickable="true"
         android:text="@string/left"
         android:textAllCaps="true"
@@ -73,7 +73,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/default_margin"
-        android:backgroundTint="@color/red"
+        android:backgroundTint="@color/blue"
         android:clickable="true"
         android:text="@string/right"
         android:textAllCaps="true"
