@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import com.example.hw1_daniel_gerbi.logic.GameManager
 import com.example.hw1_daniel_gerbi.utilities.Constants
+import com.example.hw1_daniel_gerbi.utilities.SignalManager
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.textview.MaterialTextView
 
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     private val runnable = object : Runnable {
         override fun run() {
-            handler.postDelayed(this, 1000)
+            handler.postDelayed(this, Constants.GameLogic.DELAY_MILLIS)
             gameManager.moveCakesDown()
             refreshUI()
         }
@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity() {
         main_FAB_left.setOnClickListener {
             movePlayerLeft()
         }
-        handler.postDelayed(runnable, 1000)
+        handler.postDelayed(runnable, Constants.GameLogic.DELAY_MILLIS)
         refreshUI()
     }
 
@@ -116,14 +116,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun refreshUI() {
         if (gameManager.isGameOver) {
-            showGameOverMessage()
+            showMessage("Game Over! 😭 ")
             handler.removeCallbacks(runnable)
             changeActivity("Game Over! 😭 ", gameManager.score)
         } else {
             updatePlayers()
             updateCakes()
             if(gameManager.checkCollision()){
-                Toast.makeText(this, "You ate the cakes , it's not healthy!", Toast.LENGTH_SHORT).show()
+                showMessage("You ate the cakes , it's not healthy!")
+                SignalManager.getInstance().vibrate(Constants.GameLogic.DURATION)
                 updateHearts()
             }
             gameManager.updateScore()
@@ -145,8 +146,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showGameOverMessage() {
-        Toast.makeText(this, "😭 Game Over!", Toast.LENGTH_SHORT).show()
+    private fun showMessage(txt: String) {
+        SignalManager.getInstance().toast(txt)
     }
 
     private fun updatePlayers() {
