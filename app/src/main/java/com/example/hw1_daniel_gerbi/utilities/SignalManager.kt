@@ -25,7 +25,7 @@ class SignalManager private constructor(context: Context) {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-                val SOSPattern = longArrayOf(
+                val sosPattern = longArrayOf(
                     0,
                     200,
                     100,
@@ -47,7 +47,7 @@ class SignalManager private constructor(context: Context) {
                 )
 
                 val waveFormVibrationEffect = VibrationEffect.createWaveform(
-                    SOSPattern,
+                    sosPattern,
                     -1
                 )
 
