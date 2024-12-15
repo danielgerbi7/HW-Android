@@ -29,7 +29,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="@dimen/default_margin_cake"
         android:layout_marginBottom="@dimen/margin_bottom_player"
-        app:srcCompat="@drawable/player" />
+        app:srcCompat="@drawable/fat_person" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/main_IMG_player2"
@@ -38,7 +38,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/margin_bottom_player"
-        app:srcCompat="@drawable/player" />
+        app:srcCompat="@drawable/fat_person" />
 
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -49,7 +49,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/default_margin_cake"
         android:layout_marginBottom="@dimen/margin_bottom_player"
-        app:srcCompat="@drawable/player" />
+        app:srcCompat="@drawable/fat_person" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/main_FAB_left"
