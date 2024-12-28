@@ -21,35 +21,48 @@
         android:textStyle="bold"
         tools:text="000" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/main_IMG_player1"
-        android:layout_width="@dimen/player_height"
-        android:layout_height="@dimen/player_width"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="@dimen/default_margin_cake"
-        android:layout_marginBottom="@dimen/margin_bottom_player"
-        app:srcCompat="@drawable/fat_person" />
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/main_IMG_players"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/main_FAB_right">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/main_IMG_player2"
-        android:layout_width="@dimen/player_height"
-        android:layout_height="@dimen/player_width"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/margin_bottom_player"
-        app:srcCompat="@drawable/fat_person" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_player1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/fat_person" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_player2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/fat_person" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/main_IMG_player3"
-        android:layout_width="@dimen/player_height"
-        android:layout_height="@dimen/player_width"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/default_margin_cake"
-        android:layout_marginBottom="@dimen/margin_bottom_player"
-        app:srcCompat="@drawable/fat_person" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_player3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/fat_person" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_player4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/fat_person" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_player5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/fat_person" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/main_FAB_left"
@@ -123,8 +136,8 @@
         android:layout_below="@id/main_IMG_hearts"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:columnCount="3"
-        android:rowCount="5">
+        android:columnCount="5"
+        android:rowCount="8">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/main_IMG_cake1"
@@ -137,6 +150,16 @@
             app:srcCompat="@drawable/cake" />
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_coin1"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_margin="@dimen/default_margin_cake"
+            android:visibility="visible"
+            app:srcCompat="@drawable/coin" />
+
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/main_IMG_cake2"
             android:layout_width="@dimen/cake_size"
             android:layout_height="@dimen/cake_size"
@@ -145,6 +168,16 @@
             android:visibility="visible"
             android:layout_margin="@dimen/default_margin_cake"
             app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_coin2"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_margin="@dimen/default_margin_cake"
+            android:visibility="visible"
+            app:srcCompat="@drawable/coin" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/main_IMG_cake3"
@@ -160,8 +193,8 @@
             android:id="@+id/main_IMG_cake4"
             android:layout_width="@dimen/cake_size"
             android:layout_height="@dimen/cake_size"
-            android:layout_row="1"
-            android:layout_column="0"
+            android:layout_row="0"
+            android:layout_column="3"
             android:visibility="visible"
             android:layout_margin="@dimen/default_margin_cake"
             app:srcCompat="@drawable/cake" />
@@ -170,8 +203,8 @@
             android:id="@+id/main_IMG_cake5"
             android:layout_width="@dimen/cake_size"
             android:layout_height="@dimen/cake_size"
-            android:layout_row="1"
-            android:layout_column="1"
+            android:layout_row="0"
+            android:layout_column="4"
             android:visibility="visible"
             android:layout_margin="@dimen/default_margin_cake"
             app:srcCompat="@drawable/cake" />
@@ -181,7 +214,7 @@
             android:layout_width="@dimen/cake_size"
             android:layout_height="@dimen/cake_size"
             android:layout_row="1"
-            android:layout_column="2"
+            android:layout_column="0"
             android:visibility="visible"
             android:layout_margin="@dimen/default_margin_cake"
             app:srcCompat="@drawable/cake" />
@@ -190,8 +223,8 @@
             android:id="@+id/main_IMG_cake7"
             android:layout_width="@dimen/cake_size"
             android:layout_height="@dimen/cake_size"
-            android:layout_row="2"
-            android:layout_column="0"
+            android:layout_row="1"
+            android:layout_column="1"
             android:visibility="visible"
             android:layout_margin="@dimen/default_margin_cake"
             app:srcCompat="@drawable/cake" />
@@ -200,8 +233,8 @@
             android:id="@+id/main_IMG_cake8"
             android:layout_width="@dimen/cake_size"
             android:layout_height="@dimen/cake_size"
-            android:layout_row="2"
-            android:layout_column="1"
+            android:layout_row="1"
+            android:layout_column="2"
             android:visibility="visible"
             android:layout_margin="@dimen/default_margin_cake"
             app:srcCompat="@drawable/cake" />
@@ -210,8 +243,8 @@
             android:id="@+id/main_IMG_cake9"
             android:layout_width="@dimen/cake_size"
             android:layout_height="@dimen/cake_size"
-            android:layout_row="2"
-            android:layout_column="2"
+            android:layout_row="1"
+            android:layout_column="3"
             android:visibility="visible"
             android:layout_margin="@dimen/default_margin_cake"
             app:srcCompat="@drawable/cake" />
@@ -220,8 +253,8 @@
             android:id="@+id/main_IMG_cake10"
             android:layout_width="@dimen/cake_size"
             android:layout_height="@dimen/cake_size"
-            android:layout_row="3"
-            android:layout_column="0"
+            android:layout_row="1"
+            android:layout_column="4"
             android:visibility="visible"
             android:layout_margin="@dimen/default_margin_cake"
             app:srcCompat="@drawable/cake" />
@@ -230,8 +263,8 @@
             android:id="@+id/main_IMG_cake11"
             android:layout_width="@dimen/cake_size"
             android:layout_height="@dimen/cake_size"
-            android:layout_row="3"
-            android:layout_column="1"
+            android:layout_row="2"
+            android:layout_column="0"
             android:visibility="visible"
             android:layout_margin="@dimen/default_margin_cake"
             app:srcCompat="@drawable/cake" />
@@ -240,14 +273,93 @@
             android:id="@+id/main_IMG_cake12"
             android:layout_width="@dimen/cake_size"
             android:layout_height="@dimen/cake_size"
-            android:layout_row="3"
-            android:layout_column="2"
+            android:layout_row="2"
+            android:layout_column="1"
             android:visibility="visible"
             android:layout_margin="@dimen/default_margin_cake"
             app:srcCompat="@drawable/cake" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/main_IMG_cake13"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="2"
+            android:layout_column="2"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake14"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="2"
+            android:layout_column="3"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake15"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="2"
+            android:layout_column="4"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake16"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:layout_margin="@dimen/default_margin_cake"
+            android:visibility="visible"
+            app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake17"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="3"
+            android:layout_column="1"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake18"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="3"
+            android:layout_column="2"
+            android:layout_margin="@dimen/default_margin_cake"
+            android:visibility="visible"
+            app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake19"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="3"
+            android:layout_column="3"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake20"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="3"
+            android:layout_column="4"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake21"
             android:layout_width="@dimen/cake_size"
             android:layout_height="@dimen/cake_size"
             android:layout_row="4"
@@ -257,7 +369,7 @@
             app:srcCompat="@drawable/cake" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/main_IMG_cake14"
+            android:id="@+id/main_IMG_cake22"
             android:layout_width="@dimen/cake_size"
             android:layout_height="@dimen/cake_size"
             android:layout_row="4"
@@ -267,7 +379,7 @@
             app:srcCompat="@drawable/cake" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/main_IMG_cake15"
+            android:id="@+id/main_IMG_cake23"
             android:layout_width="@dimen/cake_size"
             android:layout_height="@dimen/cake_size"
             android:layout_row="4"
@@ -275,5 +387,175 @@
             android:visibility="visible"
             android:layout_margin="@dimen/default_margin_cake"
             app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake24"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="4"
+            android:layout_column="3"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake25"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="4"
+            android:layout_column="4"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake26"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="5"
+            android:layout_column="0"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake27"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="5"
+            android:layout_column="1"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake28"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="5"
+            android:layout_column="2"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake29"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="5"
+            android:layout_column="3"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake30"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="5"
+            android:layout_column="4"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake31"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="6"
+            android:layout_column="0"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake32"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="6"
+            android:layout_column="1"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake33"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="6"
+            android:layout_column="2"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake34"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="6"
+            android:layout_column="3"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake35"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="6"
+            android:layout_column="4"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake36"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="7"
+            android:layout_column="0"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake37"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="7"
+            android:layout_column="1"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake38"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="7"
+            android:layout_column="2"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake39"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="7"
+            android:layout_column="3"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/main_IMG_cake40"
+            android:layout_width="@dimen/cake_size"
+            android:layout_height="@dimen/cake_size"
+            android:layout_row="7"
+            android:layout_column="4"
+            android:visibility="visible"
+            android:layout_margin="@dimen/default_margin_cake"
+            app:srcCompat="@drawable/cake" />
+
     </GridLayout>
 </RelativeLayout>
