@@ -2,4 +2,17 @@
     <string name="app_name">HW1_Daniel_Gerbi</string>
     <string name="left">left</string>
     <string name="right">right</string>
+    <string name="toggle_string">Sensors:  </string>
+    <string name="startGame_string">Start Game</string>
+    <string name="string_exit">Exit</string>
+    <string name="string_speed">Speed :</string>
+    <string name="string_setting">Setting</string>
+    <string name="string_cancel">Cancel</string>
+    <string name="save_changes">Save Changes</string>
+
+    <string-array name="Speed">
+        <item>Slow</item>
+        <item>Normal</item>
+        <item>Fast</item>
+    </string-array>
 </resources>

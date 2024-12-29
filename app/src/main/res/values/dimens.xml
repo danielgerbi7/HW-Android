@@ -11,4 +11,5 @@
     <dimen name="margin_bottom_player">120dp</dimen>
     <dimen name="default_margin_cake">20dp</dimen>
     <dimen name="cake_size">40dp</dimen>
+    <dimen name="text_size">20sp</dimen>
 </resources>
