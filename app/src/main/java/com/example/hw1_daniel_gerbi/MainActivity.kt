@@ -9,8 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import com.example.hw1_daniel_gerbi.interfaces.TiltCallback
 import com.example.hw1_daniel_gerbi.logic.GameManager
+import com.example.hw1_daniel_gerbi.utilities.BackgroundMusicPlayer
 import com.example.hw1_daniel_gerbi.utilities.Constants
 import com.example.hw1_daniel_gerbi.utilities.SignalManager
+import com.example.hw1_daniel_gerbi.utilities.SingleSoundPlayer
 import com.example.hw1_daniel_gerbi.utilities.TiltDetector
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.textview.MaterialTextView
@@ -226,11 +228,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        BackgroundMusicPlayer.getInstance().playMusic()
         tiltDetector.start()
     }
 
     override fun onPause() {
         super.onPause()
+        BackgroundMusicPlayer.getInstance().pauseMusic()
         tiltDetector.stop()
     }
 
@@ -251,10 +255,12 @@ class MainActivity : AppCompatActivity() {
             if(gameManager.checkCollisionCake()){
                 showMessage("You ate the cakes , it's not healthy!")
                 SignalManager.getInstance().vibrate(Constants.GameLogic.DURATION)
+                SingleSoundPlayer(this).playSound(R.raw.crash_sound)
                 updateHearts()
             }
             if(gameManager.checkCollisionCoin()){
                 showMessage("You ate the coins , you are rich!")
+                SingleSoundPlayer(this).playSound(R.raw.collect_coins)
             }
             gameManager.updateScore()
             main_LBL_score.text = gameManager.score.toString()
