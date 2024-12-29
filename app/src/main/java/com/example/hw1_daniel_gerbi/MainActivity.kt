@@ -7,9 +7,11 @@ import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
+import com.example.hw1_daniel_gerbi.interfaces.TiltCallback
 import com.example.hw1_daniel_gerbi.logic.GameManager
 import com.example.hw1_daniel_gerbi.utilities.Constants
 import com.example.hw1_daniel_gerbi.utilities.SignalManager
+import com.example.hw1_daniel_gerbi.utilities.TiltDetector
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.textview.MaterialTextView
 
@@ -31,6 +33,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var gameManager: GameManager
 
+    private lateinit var tiltDetector: TiltDetector
+
+
     val handler = Handler(Looper.getMainLooper())
 
     private val runnable = object : Runnable {
@@ -48,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         findViews()
         gameManager = GameManager(main_IMG_hearts.size)
         initViews()
+        initTiltDetector()
     }
 
     private fun findViews() {
@@ -201,6 +207,31 @@ class MainActivity : AppCompatActivity() {
         }
         handler.postDelayed(runnable, Constants.GameLogic.DELAY_MILLIS)
         refreshUI()
+    }
+
+    private fun initTiltDetector() {
+        tiltDetector = TiltDetector(
+            context = this,
+            tiltCallback = object : TiltCallback {
+                override fun tiltX() {
+                    if (tiltDetector.tiltCounterX > 0) {
+                        movePlayerRight()
+                    } else {
+                        movePlayerLeft()
+                    }
+                }
+            }
+        )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        tiltDetector.start()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        tiltDetector.stop()
     }
 
     override fun onStop() {
