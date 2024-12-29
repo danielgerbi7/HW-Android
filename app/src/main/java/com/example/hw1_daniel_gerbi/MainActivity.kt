@@ -37,6 +37,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var tiltDetector: TiltDetector
 
+    private var isUsingSensors = false
+    private var selectedSpeed = "Normal"
+
 
     val handler = Handler(Looper.getMainLooper())
 
@@ -52,10 +55,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        isUsingSensors = intent.getBooleanExtra("IS_USING_SENSORS", false)
+        selectedSpeed = intent.getStringExtra("SELECTED_SPEED") ?: "Normal"
+
         findViews()
         gameManager = GameManager(main_IMG_hearts.size)
         initViews()
-        initTiltDetector()
+        if(isUsingSensors){
+            initTiltDetector()
+        }
     }
 
     private fun findViews() {
@@ -207,8 +216,18 @@ class MainActivity : AppCompatActivity() {
         main_FAB_left.setOnClickListener {
             movePlayerLeft()
         }
-        handler.postDelayed(runnable, Constants.GameLogic.DELAY_MILLIS)
+        val speed = speedToDelay(selectedSpeed)
+        handler.postDelayed(runnable, speed)
         refreshUI()
+    }
+
+    private fun speedToDelay(speed: String): Long {
+        return when (speed) {
+            "Slow" -> Constants.GameLogic.DELAY_MILLIS * 10
+            "Normal" -> Constants.GameLogic.DELAY_MILLIS
+            "Fast" -> Constants.GameLogic.DELAY_MILLIS / 10
+            else -> Constants.GameLogic.DELAY_MILLIS
+        }
     }
 
     private fun initTiltDetector() {
@@ -224,12 +243,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         )
+        tiltDetector.start()
     }
 
     override fun onResume() {
         super.onResume()
         BackgroundMusicPlayer.getInstance().playMusic()
-        tiltDetector.start()
+        if(isUsingSensors){
+            tiltDetector.start()
+        }
     }
 
     override fun onPause() {
