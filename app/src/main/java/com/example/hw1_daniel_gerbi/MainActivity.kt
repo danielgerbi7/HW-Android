@@ -27,6 +27,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var main_IMG_cakes: Array<Array<AppCompatImageView>>
 
+    private lateinit var main_IMG_coins: Array<Array<AppCompatImageView>>
+
     private lateinit var gameManager: GameManager
 
     val handler = Handler(Looper.getMainLooper())
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         override fun run() {
             handler.postDelayed(this, Constants.GameLogic.DELAY_MILLIS)
             gameManager.moveCakesDown()
+            gameManager.moveCoinsDown()
             refreshUI()
         }
     }
@@ -73,7 +76,61 @@ class MainActivity : AppCompatActivity() {
                 findViewById(R.id.main_IMG_cake2),
                 findViewById(R.id.main_IMG_cake3),
                 findViewById(R.id.main_IMG_cake4),
-                findViewById(R.id.main_IMG_cake5),
+                findViewById(R.id.main_IMG_cake5)
+            ),
+            arrayOf(
+                findViewById(R.id.main_IMG_cake6),
+                findViewById(R.id.main_IMG_cake7),
+                findViewById(R.id.main_IMG_cake8),
+                findViewById(R.id.main_IMG_cake9),
+                findViewById(R.id.main_IMG_cake10)
+            ),
+            arrayOf(
+                findViewById(R.id.main_IMG_cake11),
+                findViewById(R.id.main_IMG_cake12),
+                findViewById(R.id.main_IMG_cake13),
+                findViewById(R.id.main_IMG_cake14),
+                findViewById(R.id.main_IMG_cake15)
+            ),
+            arrayOf(
+                findViewById(R.id.main_IMG_cake16),
+                findViewById(R.id.main_IMG_cake17),
+                findViewById(R.id.main_IMG_cake18),
+                findViewById(R.id.main_IMG_cake19),
+                findViewById(R.id.main_IMG_cake20)
+            ),
+            arrayOf(
+                findViewById(R.id.main_IMG_cake21),
+                findViewById(R.id.main_IMG_cake22),
+                findViewById(R.id.main_IMG_cake23),
+                findViewById(R.id.main_IMG_cake24),
+                findViewById(R.id.main_IMG_cake25)
+            ),
+            arrayOf(
+                findViewById(R.id.main_IMG_cake26),
+                findViewById(R.id.main_IMG_cake27),
+                findViewById(R.id.main_IMG_cake28),
+                findViewById(R.id.main_IMG_cake29),
+                findViewById(R.id.main_IMG_cake30)
+            ),
+            arrayOf(
+                findViewById(R.id.main_IMG_cake31),
+                findViewById(R.id.main_IMG_cake32),
+                findViewById(R.id.main_IMG_cake33),
+                findViewById(R.id.main_IMG_cake34),
+                findViewById(R.id.main_IMG_cake35)
+            ),
+            arrayOf(
+                findViewById(R.id.main_IMG_cake36),
+                findViewById(R.id.main_IMG_cake37),
+                findViewById(R.id.main_IMG_cake38),
+                findViewById(R.id.main_IMG_cake39),
+                findViewById(R.id.main_IMG_cake40)
+            )
+        )
+
+        main_IMG_coins = arrayOf(
+            arrayOf(
                 findViewById(R.id.main_IMG_coin1),
                 findViewById(R.id.main_IMG_coin2),
                 findViewById(R.id.main_IMG_coin3),
@@ -81,11 +138,6 @@ class MainActivity : AppCompatActivity() {
                 findViewById(R.id.main_IMG_coin5)
             ),
             arrayOf(
-                findViewById(R.id.main_IMG_cake6),
-                findViewById(R.id.main_IMG_cake7),
-                findViewById(R.id.main_IMG_cake8),
-                findViewById(R.id.main_IMG_cake9),
-                findViewById(R.id.main_IMG_cake10),
                 findViewById(R.id.main_IMG_coin6),
                 findViewById(R.id.main_IMG_coin7),
                 findViewById(R.id.main_IMG_coin8),
@@ -93,11 +145,6 @@ class MainActivity : AppCompatActivity() {
                 findViewById(R.id.main_IMG_coin10)
             ),
             arrayOf(
-                findViewById(R.id.main_IMG_cake11),
-                findViewById(R.id.main_IMG_cake12),
-                findViewById(R.id.main_IMG_cake13),
-                findViewById(R.id.main_IMG_cake14),
-                findViewById(R.id.main_IMG_cake15),
                 findViewById(R.id.main_IMG_coin11),
                 findViewById(R.id.main_IMG_coin12),
                 findViewById(R.id.main_IMG_coin13),
@@ -105,11 +152,6 @@ class MainActivity : AppCompatActivity() {
                 findViewById(R.id.main_IMG_coin15)
             ),
             arrayOf(
-                findViewById(R.id.main_IMG_cake16),
-                findViewById(R.id.main_IMG_cake17),
-                findViewById(R.id.main_IMG_cake18),
-                findViewById(R.id.main_IMG_cake19),
-                findViewById(R.id.main_IMG_cake20),
                 findViewById(R.id.main_IMG_coin16),
                 findViewById(R.id.main_IMG_coin17),
                 findViewById(R.id.main_IMG_coin18),
@@ -117,11 +159,6 @@ class MainActivity : AppCompatActivity() {
                 findViewById(R.id.main_IMG_coin20)
             ),
             arrayOf(
-                findViewById(R.id.main_IMG_cake21),
-                findViewById(R.id.main_IMG_cake22),
-                findViewById(R.id.main_IMG_cake23),
-                findViewById(R.id.main_IMG_cake24),
-                findViewById(R.id.main_IMG_cake25),
                 findViewById(R.id.main_IMG_coin21),
                 findViewById(R.id.main_IMG_coin22),
                 findViewById(R.id.main_IMG_coin23),
@@ -129,11 +166,6 @@ class MainActivity : AppCompatActivity() {
                 findViewById(R.id.main_IMG_coin25)
             ),
             arrayOf(
-                findViewById(R.id.main_IMG_cake26),
-                findViewById(R.id.main_IMG_cake27),
-                findViewById(R.id.main_IMG_cake28),
-                findViewById(R.id.main_IMG_cake29),
-                findViewById(R.id.main_IMG_cake30),
                 findViewById(R.id.main_IMG_coin26),
                 findViewById(R.id.main_IMG_coin27),
                 findViewById(R.id.main_IMG_coin28),
@@ -141,11 +173,6 @@ class MainActivity : AppCompatActivity() {
                 findViewById(R.id.main_IMG_coin30)
             ),
             arrayOf(
-                findViewById(R.id.main_IMG_cake31),
-                findViewById(R.id.main_IMG_cake32),
-                findViewById(R.id.main_IMG_cake33),
-                findViewById(R.id.main_IMG_cake34),
-                findViewById(R.id.main_IMG_cake35),
                 findViewById(R.id.main_IMG_coin31),
                 findViewById(R.id.main_IMG_coin32),
                 findViewById(R.id.main_IMG_coin33),
@@ -153,11 +180,6 @@ class MainActivity : AppCompatActivity() {
                 findViewById(R.id.main_IMG_coin35)
             ),
             arrayOf(
-                findViewById(R.id.main_IMG_cake36),
-                findViewById(R.id.main_IMG_cake37),
-                findViewById(R.id.main_IMG_cake38),
-                findViewById(R.id.main_IMG_cake39),
-                findViewById(R.id.main_IMG_cake40),
                 findViewById(R.id.main_IMG_coin36),
                 findViewById(R.id.main_IMG_coin37),
                 findViewById(R.id.main_IMG_coin38),
@@ -194,6 +216,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             updatePlayers()
             updateCakes()
+            updateCoins()
             if(gameManager.checkCollisionCake()){
                 showMessage("You ate the cakes , it's not healthy!")
                 SignalManager.getInstance().vibrate(Constants.GameLogic.DURATION)
@@ -248,12 +271,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateCoins() {
-        for (row in main_IMG_cakes.indices) {
-            for (col in main_IMG_cakes[row].indices) {
+        for (row in main_IMG_coins.indices) {
+            for (col in main_IMG_coins[row].indices) {
                 if (gameManager.coinMatrix[row][col]) {
-                    main_IMG_cakes[row][col].visibility = View.VISIBLE
+                    main_IMG_coins[row][col].visibility = View.VISIBLE
                 } else {
-                    main_IMG_cakes[row][col].visibility = View.INVISIBLE
+                    main_IMG_coins[row][col].visibility = View.INVISIBLE
                 }
             }
         }

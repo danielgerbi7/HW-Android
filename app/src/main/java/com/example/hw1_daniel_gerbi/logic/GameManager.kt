@@ -42,6 +42,12 @@ class GameManager(private val lifeCount: Int = 3, private val numOfLanes : Int =
         return arr
     }
 
+    private fun getRandomBooleanArray(size: Int): Array<Boolean> {
+        val array = Array(size) { false }
+        val randomIndex = (0 until size).random()
+        array[randomIndex] = true
+        return array
+    }
     fun moveCakesDown() {
         for (row in 7 downTo 1) {
             for (col in 0 until 5) {
@@ -51,24 +57,29 @@ class GameManager(private val lifeCount: Int = 3, private val numOfLanes : Int =
         cakeMatrix[0] = getRandomBooleanArray(numOfLanes)
     }
 
-    fun moveCoinDown() {
+    private fun getRandomBooleanArrayWithoutOverlap(size: Int, obstacleRow: Array<Boolean>): Array<Boolean> {
+        val array = Array(size) { false }
+        val possibleIndexes = (0 until size).filter { !obstacleRow[it] }
+        val coinAppearanceProbability = 0.2
+        if (possibleIndexes.isNotEmpty() && Math.random() < coinAppearanceProbability) {
+            val randomIndex = possibleIndexes.random()
+            array[randomIndex] = true
+        }
+        return array
+    }
+
+    fun moveCoinsDown() {
         for (row in 7 downTo 1) {
             for (col in 0 until 5) {
                 coinMatrix[row][col] = coinMatrix[row - 1][col]
             }
         }
-        coinMatrix[0] = getRandomBooleanArray(numOfLanes)
+        coinMatrix[0] = getRandomBooleanArrayWithoutOverlap(numOfLanes, cakeMatrix[0])
     }
 
-    private fun getRandomBooleanArray(size: Int): Array<Boolean> {
-        val array = Array(size) { false }
-        val randomIndex = (0 until size).random()
-        array[randomIndex] = true
-        return array
-    }
 
     fun checkCollisionCake(): Boolean {
-        if (cakeMatrix[6][playerPosition]) {
+        if (cakeMatrix[7][playerPosition]) {
             hitPosition++
             return true
         }
@@ -76,7 +87,7 @@ class GameManager(private val lifeCount: Int = 3, private val numOfLanes : Int =
     }
 
     fun checkCollisionCoin(): Boolean {
-        if (coinMatrix[6][playerPosition]) {
+        if (coinMatrix[7][playerPosition]) {
             score += Constants.GameLogic.CATCH_COINS
             return true
         }

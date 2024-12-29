@@ -25,40 +25,44 @@
         android:id="@+id/main_IMG_players"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/margin_bottom_player"
+        android:gravity="center"
+        android:orientation="horizontal"
         android:layout_above="@id/main_FAB_right">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/main_IMG_player1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/player_width"
+            android:layout_height="@dimen/player_height"
             android:layout_weight="1"
             app:srcCompat="@drawable/fat_person" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/main_IMG_player2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/player_width"
+            android:layout_height="@dimen/player_height"
             android:layout_weight="1"
             app:srcCompat="@drawable/fat_person" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/main_IMG_player3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/player_width"
+            android:layout_height="@dimen/player_height"
             android:layout_weight="1"
             app:srcCompat="@drawable/fat_person" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/main_IMG_player4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/player_width"
+            android:layout_height="@dimen/player_height"
             android:layout_weight="1"
             app:srcCompat="@drawable/fat_person" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/main_IMG_player5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/player_width"
+            android:layout_height="@dimen/player_height"
             android:layout_weight="1"
             app:srcCompat="@drawable/fat_person" />
     </androidx.appcompat.widget.LinearLayoutCompat>
