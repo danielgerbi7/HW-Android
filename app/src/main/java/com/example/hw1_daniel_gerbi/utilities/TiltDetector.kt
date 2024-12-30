@@ -39,7 +39,11 @@ class TiltDetector(context: Context, private val tiltCallback: TiltCallback?) {
     private fun calculateTilt(x: Float) {
         if (System.currentTimeMillis() - timestamp >= Constants.GameLogic.DURATION) {
             timestamp = System.currentTimeMillis()
-            if (abs(x) >= 3.0) {
+            if (x >= 3){
+                tiltCounterX--
+                tiltCallback?.tiltX()
+            }
+            if (x <= -3) {
                 tiltCounterX++
                 tiltCallback?.tiltX()
             }

@@ -30,11 +30,12 @@
         android:id="@+id/settings_BTN_speed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:entries="@array/Speed"
-        android:textStyle="bold"
-        android:textSize="@dimen/text_size"
+        android:layout_marginBottom="@dimen/default_margin"
         android:backgroundTint="@color/red"
-        android:layout_marginBottom="@dimen/default_margin" />
+        android:entries="@array/Speed"
+        android:minHeight="48dp"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/settings_BTN_save"

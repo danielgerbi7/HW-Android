@@ -10,8 +10,13 @@ class GameManager(private val lifeCount: Int = 3, private val numOfLanes : Int =
     var playerPosition = 1
     var hitPosition = 0
 
-    val cakeMatrix: Array<Array<Boolean>> = getRandomMatrix()
-    val coinMatrix: Array<Array<Boolean>> = getRandomMatrix()
+    val cakeMatrix: Array<Array<Boolean>>
+    val coinMatrix: Array<Array<Boolean>>
+
+    init {
+        cakeMatrix = getRandomMatrix()
+        coinMatrix = getRandomMatrixWithAvoidance(cakeMatrix)
+    }
 
     fun canMovePlayerLeft(): Boolean {
         return playerPosition > 0
@@ -38,6 +43,14 @@ class GameManager(private val lifeCount: Int = 3, private val numOfLanes : Int =
         val arr: Array<Array<Boolean>> = Array(8) { Array(numOfLanes) { false } }
         for(i in 0..4){
             arr[i] = getRandomBooleanArray(numOfLanes)
+        }
+        return arr
+    }
+
+    private fun getRandomMatrixWithAvoidance(obstacleMatrix: Array<Array<Boolean>>): Array<Array<Boolean>> {
+        val arr: Array<Array<Boolean>> = Array(8) { Array(numOfLanes) { false } }
+        for (i in arr.indices) {
+            arr[i] = getRandomBooleanArrayWithoutOverlap(numOfLanes, obstacleMatrix[i])
         }
         return arr
     }
