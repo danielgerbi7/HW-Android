@@ -9,6 +9,7 @@
     <string name="string_setting">Setting</string>
     <string name="string_cancel">Cancel</string>
     <string name="save_changes">Save Changes</string>
+    <string name="string_gameName">Sweet Sprint</string>
 
     <string-array name="Speed">
         <item>Slow</item>

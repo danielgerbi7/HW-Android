@@ -11,7 +11,7 @@ class Constants {
 
     object GameLogic {
         const val AVOID_POINTS = 10
-        const val CATCH_COINS = 20
+        const val CATCH_COINS = 50
         const val DURATION = 500L
         const val DELAY_MILLIS = 1000L
     }
