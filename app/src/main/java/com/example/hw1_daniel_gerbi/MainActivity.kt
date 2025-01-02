@@ -37,18 +37,27 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var tiltDetector: TiltDetector
 
-    private var isUsingSensors = false
-    private var selectedSpeed = "Normal"
+    private var isUsingSensors : Boolean = false
+    private var selectedSpeed : String = "Normal"
 
 
     val handler = Handler(Looper.getMainLooper())
 
+    private var isRunning = false
+
     private val runnable = object : Runnable {
         override fun run() {
+            if (!isRunning) {
+                isRunning = true
+                try {
+                        gameManager.moveCakesDown()
+                        gameManager.moveCoinsDown()
+                        refreshUI()
+                } finally {
+                    isRunning = false
+                }
+            }
             handler.postDelayed(this, Constants.GameLogic.DELAY_MILLIS)
-            gameManager.moveCakesDown()
-            gameManager.moveCoinsDown()
-            refreshUI()
         }
     }
 
@@ -64,7 +73,10 @@ class MainActivity : AppCompatActivity() {
         initViews()
         if(isUsingSensors){
             initTiltDetector()
+            main_FAB_left.visibility = View.INVISIBLE
+            main_FAB_right.visibility = View.INVISIBLE
         }
+        startGameLoop()
     }
 
     private fun findViews() {
@@ -210,11 +222,13 @@ class MainActivity : AppCompatActivity() {
 
         main_LBL_score.text = gameManager.score.toString()
 
-        main_FAB_right.setOnClickListener {
-            movePlayerRight()
-        }
-        main_FAB_left.setOnClickListener {
-            movePlayerLeft()
+        if (!isUsingSensors) {
+            main_FAB_right.setOnClickListener {
+                movePlayerRight()
+            }
+            main_FAB_left.setOnClickListener {
+                movePlayerLeft()
+            }
         }
         val speed = speedToDelay(selectedSpeed)
         handler.postDelayed(runnable, speed)
@@ -223,9 +237,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun speedToDelay(speed: String): Long {
         return when (speed) {
-            "Slow" -> Constants.GameLogic.DELAY_MILLIS * 10
+            "Slow" -> Constants.GameLogic.DELAY_MILLIS * 3
             "Normal" -> Constants.GameLogic.DELAY_MILLIS
-            "Fast" -> Constants.GameLogic.DELAY_MILLIS / 10
+            "Fast" -> Constants.GameLogic.DELAY_MILLIS / 3
             else -> Constants.GameLogic.DELAY_MILLIS
         }
     }
@@ -263,6 +277,9 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         handler.removeCallbacks(runnable)
+        if (isUsingSensors) {
+            tiltDetector.stop()
+        }
     }
 
     private fun refreshUI() {
@@ -287,8 +304,9 @@ class MainActivity : AppCompatActivity() {
             gameManager.updateScore()
             main_LBL_score.text = gameManager.score.toString()
             updateHearts()
+            }
         }
-    }
+
     private fun movePlayerLeft() {
         if (gameManager.canMovePlayerLeft()) {
             gameManager.movePlayerLeft()
@@ -342,13 +360,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateHearts() {
-        if (gameManager.hitPosition != 0) {
+        if (gameManager.hitPosition != 0 && gameManager.hitPosition <= main_IMG_hearts.size) {
             main_IMG_hearts[main_IMG_hearts.size - gameManager.hitPosition].visibility =
                 View.INVISIBLE
             }
         }
 
+    private fun startGameLoop() {
+        val speed = speedToDelay(selectedSpeed)
+        handler.removeCallbacks(runnable)
+        handler.postDelayed(runnable, speed)
+    }
+
     private fun changeActivity(message: String, score: Int) {
+        handler.removeCallbacks(runnable)
         val intent = Intent(this, ScoreActivity::class.java)
         var bundle = Bundle()
         bundle.putInt(Constants.BundleKeys.SCORE_KEY, score)
