@@ -3,8 +3,8 @@ package com.example.hw1_daniel_gerbi.utilities
 import android.content.Context
 import android.media.MediaPlayer
 import java.lang.ref.WeakReference
-
 class BackgroundMusicPlayer private constructor(context: Context) {
+
     private val contextRef = WeakReference(context)
     private var mediaPlayer: MediaPlayer? = null
     private var resId: Int = 0
@@ -18,7 +18,6 @@ class BackgroundMusicPlayer private constructor(context: Context) {
         if (mediaPlayer != null) {
             release()
         }
-
         mediaPlayer = MediaPlayer.create(contextRef.get(), resId)
         mediaPlayer!!.isLooping = true
         mediaPlayer!!.setVolume(0.4f, 0.4f)
@@ -28,15 +27,14 @@ class BackgroundMusicPlayer private constructor(context: Context) {
         if (mediaPlayer == null){
             return
         }
-
         try {
             mediaPlayer!!.release()
             mediaPlayer = null
         } catch (ex: IllegalStateException){
             ex.printStackTrace()
         }
-
     }
+
     fun playMusic(){
         if (mediaPlayer == null || mediaPlayer!!.isPlaying){
             return
@@ -53,7 +51,6 @@ class BackgroundMusicPlayer private constructor(context: Context) {
         if (mediaPlayer == null || !mediaPlayer!!.isPlaying){
             return
         }
-
         try {
             mediaPlayer!!.pause()
         } catch (e: IllegalStateException) {
@@ -65,7 +62,6 @@ class BackgroundMusicPlayer private constructor(context: Context) {
         if (mediaPlayer == null || !mediaPlayer!!.isPlaying){
             return
         }
-
         try {
             mediaPlayer!!.stop()
             release()

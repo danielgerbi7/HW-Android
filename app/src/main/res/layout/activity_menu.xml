@@ -44,10 +44,22 @@
         android:layout_marginBottom="@dimen/default_margin" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/menu_BTN_records"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/string_records"
+        android:layout_below="@id/menu_BTN_settings"
+        android:layout_centerInParent="true"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_size"
+        android:backgroundTint="@color/red"
+        android:layout_marginBottom="@dimen/default_margin" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/menu_BTN_exit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/menu_BTN_settings"
+        android:layout_below="@id/menu_BTN_records"
         android:layout_centerInParent="true"
         android:textStyle="bold"
         android:textSize="@dimen/text_size"

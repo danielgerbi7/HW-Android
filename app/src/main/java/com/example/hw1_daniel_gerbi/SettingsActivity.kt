@@ -18,7 +18,6 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-
         findViews()
         initViews()
     }
@@ -39,22 +38,18 @@ class SettingsActivity : AppCompatActivity() {
             saveSettings()
         }
         settings_BTN_cancel.setOnClickListener {
-            cancelSettings()
+            finish()
         }
     }
 
     private fun saveSettings() {
         val isUsingSensors = settings_BTN_switch.isChecked
         val selectedSpeed = settings_BTN_speed.selectedItem.toString()
-        val intent = Intent().apply {
+        val intent = Intent(this, MainActivity::class.java).apply {
             putExtra("IS_USING_SENSORS", isUsingSensors)
             putExtra("SELECTED_SPEED", selectedSpeed)
         }
-        setResult(RESULT_OK, intent)
-        finish()
-    }
-    private fun cancelSettings() {
-        setResult(RESULT_CANCELED)
+        startActivity(intent)
         finish()
     }
 

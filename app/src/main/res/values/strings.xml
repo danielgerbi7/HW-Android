@@ -10,7 +10,12 @@
     <string name="string_cancel">Cancel</string>
     <string name="save_changes">Save Changes</string>
     <string name="string_gameName">Sweet Sprint</string>
-
+    <string name="string_send">send</string>
+    <string name="please_enter_your_name">Please enter your name :</string>
+    <string name="score_string_text">Score: 100</string>
+    <string name="hint">Please Enter Location</string>
+    <string name="send">Send</string>
+    <string name="string_records">Records</string>
     <string-array name="Speed">
         <item>Slow</item>
         <item>Normal</item>

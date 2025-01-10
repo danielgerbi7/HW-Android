@@ -10,6 +10,7 @@ class MenuActivity : AppCompatActivity() {
     private lateinit var menu_BTN_start: MaterialButton
     private lateinit var menu_BTN_settings: MaterialButton
     private lateinit var menu_BTN_exit: MaterialButton
+    private lateinit var menu_BTN_records: MaterialButton
 
     private var isUsingSensors: Boolean = false
     private var selectedSpeed: String = "Normal"
@@ -25,12 +26,17 @@ class MenuActivity : AppCompatActivity() {
     private fun findViews() {
         menu_BTN_start = findViewById(R.id.menu_BTN_start)
         menu_BTN_settings = findViewById(R.id.menu_BTN_settings)
+        menu_BTN_records = findViewById(R.id.menu_BTN_records)
         menu_BTN_exit = findViewById(R.id.menu_BTN_exit)
     }
 
     private fun initViews() {
         menu_BTN_start.setOnClickListener { startGame() }
         menu_BTN_settings.setOnClickListener { openSettings() }
+        menu_BTN_records.setOnClickListener {
+            val intent = Intent(this, HighScoreActivity::class.java)
+            startActivity(intent)
+        }
         menu_BTN_exit.setOnClickListener { exitGame() }
     }
 

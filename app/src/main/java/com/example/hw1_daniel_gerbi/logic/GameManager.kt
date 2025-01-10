@@ -3,13 +3,10 @@ package com.example.hw1_daniel_gerbi.logic
 import com.example.hw1_daniel_gerbi.utilities.Constants
 
 class GameManager(private val lifeCount: Int = 3, private val numOfLanes : Int = 5) {
-
     var score: Int = 0
         private set
-
     var playerPosition = 1
     var hitPosition = 0
-
     val cakeMatrix: Array<Array<Boolean>>
     val coinMatrix: Array<Array<Boolean>>
 
@@ -110,5 +107,4 @@ class GameManager(private val lifeCount: Int = 3, private val numOfLanes : Int =
     fun updateScore() {
         score += Constants.GameLogic.AVOID_POINTS
     }
-
 }

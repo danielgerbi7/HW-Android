@@ -7,6 +7,8 @@ import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.recyclerview.widget.RecyclerView
+import com.example.hw1_daniel_gerbi.adapters.HighScoreAdapter
 import com.example.hw1_daniel_gerbi.interfaces.TiltCallback
 import com.example.hw1_daniel_gerbi.logic.GameManager
 import com.example.hw1_daniel_gerbi.utilities.BackgroundMusicPlayer
@@ -37,8 +39,15 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var tiltDetector: TiltDetector
 
-    private var isUsingSensors : Boolean = false
-    private var selectedSpeed : String = "Normal"
+    private var isUsingSensors: Boolean = false
+    private var selectedSpeed: String = "Normal"
+    private val speed: Long
+        get() = speedToDelay(selectedSpeed)
+
+    private lateinit var highScoreAdapter: HighScoreAdapter
+    private lateinit var highScoreRV: RecyclerView
+
+
 
 
     val handler = Handler(Looper.getMainLooper())
@@ -47,36 +56,45 @@ class MainActivity : AppCompatActivity() {
 
     private val runnable = object : Runnable {
         override fun run() {
-            if (!isRunning) {
-                isRunning = true
-                try {
-                        gameManager.moveCakesDown()
-                        gameManager.moveCoinsDown()
-                        refreshUI()
-                } finally {
-                    isRunning = false
-                }
+            if (isRunning) {
+                gameManager.moveCakesDown()
+                gameManager.moveCoinsDown()
+                refreshUI()
             }
-            handler.postDelayed(this, Constants.GameLogic.DELAY_MILLIS)
+            handler.postDelayed(this, speed)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         isUsingSensors = intent.getBooleanExtra("IS_USING_SENSORS", false)
         selectedSpeed = intent.getStringExtra("SELECTED_SPEED") ?: "Normal"
-
         findViews()
         gameManager = GameManager(main_IMG_hearts.size)
         initViews()
-        if(isUsingSensors){
+        if (isUsingSensors) {
             initTiltDetector()
             main_FAB_left.visibility = View.INVISIBLE
             main_FAB_right.visibility = View.INVISIBLE
         }
-        startGameLoop()
+       /* highScoreRV = findViewById(R.id.highScore_RV_records)
+        highScoreRV.layoutManager = LinearLayoutManager(this)
+        val scoresList = mutableListOf(
+            Score(500),
+            Score(300),
+            Score(100),
+            Score(200),
+            Score(400),
+            Score(350),
+            Score(450),
+            Score(600),
+            Score(550),
+            Score(250)
+        )
+        val sortedScoresList = scoresList.sortedByDescending { it.score }
+        highScoreAdapter = HighScoreAdapter(sortedScoresList)
+        highScoreRV.adapter = highScoreAdapter*/
     }
 
     private fun findViews() {
@@ -219,9 +237,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-
-        main_LBL_score.text = gameManager.score.toString()
-
         if (!isUsingSensors) {
             main_FAB_right.setOnClickListener {
                 movePlayerRight()
@@ -230,16 +245,17 @@ class MainActivity : AppCompatActivity() {
                 movePlayerLeft()
             }
         }
-        val speed = speedToDelay(selectedSpeed)
-        handler.postDelayed(runnable, speed)
+        main_LBL_score.text = gameManager.score.toString()
         refreshUI()
+        isRunning = true
+        handler.postDelayed(runnable, Constants.GameLogic.DELAY_MILLIS)
     }
 
     private fun speedToDelay(speed: String): Long {
         return when (speed) {
-            "Slow" -> Constants.GameLogic.DELAY_MILLIS * 3
+            "Slow" -> Constants.GameLogic.DELAY_MILLIS * 2
             "Normal" -> Constants.GameLogic.DELAY_MILLIS
-            "Fast" -> Constants.GameLogic.DELAY_MILLIS / 3
+            "Fast" -> Constants.GameLogic.DELAY_MILLIS / 2
             else -> Constants.GameLogic.DELAY_MILLIS
         }
     }
@@ -263,7 +279,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         BackgroundMusicPlayer.getInstance().playMusic()
-        if(isUsingSensors){
+        if (isUsingSensors) {
             tiltDetector.start()
         }
     }
@@ -271,7 +287,8 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         BackgroundMusicPlayer.getInstance().pauseMusic()
-        tiltDetector.stop()
+        if (isUsingSensors)
+            tiltDetector.stop()
     }
 
     override fun onStop() {
@@ -285,27 +302,27 @@ class MainActivity : AppCompatActivity() {
     private fun refreshUI() {
         if (gameManager.isGameOver) {
             showMessage("Game Over! 😭 ")
-            handler.removeCallbacks(runnable)
+            isRunning = false
             changeActivity("Game Over! 😭 ", gameManager.score)
         } else {
             updatePlayers()
             updateCakes()
             updateCoins()
-            if(gameManager.checkCollisionCake()){
+            if (gameManager.checkCollisionCake()) {
                 showMessage("You ate the cakes , it's not healthy!")
                 SignalManager.getInstance().vibrate(Constants.GameLogic.DURATION)
                 SingleSoundPlayer(this).playSound(R.raw.crash_sound)
                 updateHearts()
             }
-            if(gameManager.checkCollisionCoin()){
+            if (gameManager.checkCollisionCoin()) {
                 showMessage("You ate the coins , you are rich!")
                 SingleSoundPlayer(this).playSound(R.raw.collect_coins)
             }
             gameManager.updateScore()
             main_LBL_score.text = gameManager.score.toString()
             updateHearts()
-            }
         }
+    }
 
     private fun movePlayerLeft() {
         if (gameManager.canMovePlayerLeft()) {
@@ -363,18 +380,12 @@ class MainActivity : AppCompatActivity() {
         if (gameManager.hitPosition != 0 && gameManager.hitPosition <= main_IMG_hearts.size) {
             main_IMG_hearts[main_IMG_hearts.size - gameManager.hitPosition].visibility =
                 View.INVISIBLE
-            }
         }
-
-    private fun startGameLoop() {
-        val speed = speedToDelay(selectedSpeed)
-        handler.removeCallbacks(runnable)
-        handler.postDelayed(runnable, speed)
     }
 
     private fun changeActivity(message: String, score: Int) {
         handler.removeCallbacks(runnable)
-        val intent = Intent(this, ScoreActivity::class.java)
+        val intent = Intent(this, HighScoreActivity::class.java)
         var bundle = Bundle()
         bundle.putInt(Constants.BundleKeys.SCORE_KEY, score)
         bundle.putString(Constants.BundleKeys.STATUS_KEY, message)

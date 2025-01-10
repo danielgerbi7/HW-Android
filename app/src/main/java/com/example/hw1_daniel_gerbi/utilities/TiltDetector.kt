@@ -6,7 +6,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import com.example.hw1_daniel_gerbi.interfaces.TiltCallback
-import kotlin.math.abs
+
 
 class TiltDetector(context: Context, private val tiltCallback: TiltCallback?) {
     private val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -37,7 +37,7 @@ class TiltDetector(context: Context, private val tiltCallback: TiltCallback?) {
 
 
     private fun calculateTilt(x: Float) {
-        if (System.currentTimeMillis() - timestamp >= Constants.GameLogic.DURATION) {
+        if (System.currentTimeMillis() - timestamp >= Constants.GameLogic.DELAY_MILLIS) {
             timestamp = System.currentTimeMillis()
             if (x >= 3){
                 tiltCounterX--
