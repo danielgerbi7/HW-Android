@@ -6,23 +6,44 @@ import android.util.Log
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hw1_daniel_gerbi.fragments.HighScoreFragment
+import com.example.hw1_daniel_gerbi.fragments.MapFragment
 import com.example.hw1_daniel_gerbi.logic.ScoreManager
 import com.example.hw1_daniel_gerbi.model.Score
 import com.example.hw1_daniel_gerbi.utilities.Constants
 import com.example.hw1_daniel_gerbi.utilities.SignalManager
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
-class HighScoreActivity : AppCompatActivity() {
+class HighScoreActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var main_FRAME_list: FrameLayout
+    //private lateinit var main_FRAME_map: FrameLayout
     private lateinit var highScoreFragment: HighScoreFragment
     private var currentScore: Int = 0
+    private lateinit var googleMap: GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_high_score)
         findViews()
         initViews()
-        //highScoreFragment.updateHighScore()
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.main_FRAME_map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+    }
+
+    override fun onMapReady(p0: GoogleMap) {
+        googleMap = p0
+        googleMap.uiSettings.isZoomControlsEnabled = true
+    }
+
+    fun zoomToLocation(latitude: Double, longitude: Double) {
+        val location = LatLng(latitude, longitude)
+        googleMap.addMarker(MarkerOptions().position(location).title("New High Score"))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
     }
 
     private fun findViews() {
@@ -67,6 +88,7 @@ class HighScoreActivity : AppCompatActivity() {
         }
         currentScore = 0
     }
+
 
 
 //    private fun locationPermissions() {
