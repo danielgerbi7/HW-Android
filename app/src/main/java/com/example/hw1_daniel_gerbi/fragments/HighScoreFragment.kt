@@ -19,9 +19,7 @@ import com.google.android.material.textview.MaterialTextView
 class HighScoreFragment : Fragment() {
 
     lateinit var highScore_LBL_title: MaterialTextView
-
     private lateinit var highScore_RV_records: RecyclerView
-
     private var score: MutableList<Score> = mutableListOf()
     private val highScoreAdapter = HighScoreAdapter(score)
 

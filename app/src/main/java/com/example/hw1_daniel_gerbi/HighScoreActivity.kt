@@ -11,7 +11,6 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hw1_daniel_gerbi.fragments.HighScoreFragment
-import com.example.hw1_daniel_gerbi.fragments.MapFragment
 import com.example.hw1_daniel_gerbi.interfaces.CallbackHighScoreItemClicked
 import com.example.hw1_daniel_gerbi.logic.ScoreManager
 import com.example.hw1_daniel_gerbi.model.Score
@@ -61,41 +60,17 @@ class HighScoreActivity : AppCompatActivity(), EasyPermissions.PermissionCallbac
     private fun initViews() {
         highScoreFragment = HighScoreFragment()
         mapFragment = SupportMapFragment.newInstance()
-
         setupHighScoreClickListener()
-//        highScoreFragment.highScoreItemClicked = object : CallbackHighScoreItemClicked{
-//            override fun highScoreItemClicked(lat: Double, lon: Double) {
-//                Log.d("HighScoreActivity", "Callback triggered with Lat: $lat, Lon: $lon")
-//                googleMap?.animateCamera(
-//                    newLatLngZoom(
-//                        LatLng(lat, lon),
-//                        15f
-//                    )
-//                )
-//                SignalManager.getInstance().toast("Zooming to: Lat=$lat, Lon=$lon")
-//            }
-//        }
-
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.main_FRAME_list, highScoreFragment)
             .replace(R.id.main_FRAME_map, mapFragment)
             .commit()
-
         mapFragment.getMapAsync { map ->
             googleMap = map
             googleMap?.uiSettings?.isZoomControlsEnabled = true
             updateMapWithScores()
         }
-//        googleMap?.setOnMarkerClickListener { marker ->
-//            marker.showInfoWindow()
-//            googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.position, 15f))
-//            SignalManager.getInstance().toast("Clicked on: ${marker.title}")
-//            updateMapWithScores()
-//            true
-
-       // }
-
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
         initLocationListener()
     }
@@ -103,7 +78,6 @@ class HighScoreActivity : AppCompatActivity(), EasyPermissions.PermissionCallbac
     private fun setupHighScoreClickListener() {
         highScoreFragment.highScoreItemClicked = object : CallbackHighScoreItemClicked {
             override fun highScoreItemClicked(lat: Double, lon: Double) {
-                Log.d("HighScoreActivity", "Callback triggered with Lat: $lat, Lon: $lon")
                 googleMap?.animateCamera(
                     CameraUpdateFactory.newLatLngZoom(
                         LatLng(lat, lon),
@@ -166,15 +140,14 @@ class HighScoreActivity : AppCompatActivity(), EasyPermissions.PermissionCallbac
         try {
             locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER,
-                30000L, // 30 seconds
-                10f, // 10 meters
+                30000L,
+                10f,
                 locationListener
             )
         } catch (e: SecurityException) {
-            Log.e("LocationDebug", "Permission not granted for location updates", e)
+            SignalManager.getInstance().toast("Location permissions are required to save high scores.")
         }
     }
-
 
     private fun stopLocationListener() {
         locationManager.removeUpdates(locationListener)
@@ -197,7 +170,6 @@ class HighScoreActivity : AppCompatActivity(), EasyPermissions.PermissionCallbac
 
     private fun saveScoreIfEligible(latitude: Double, longitude: Double) {
         if (currentScore == 0) return
-
         val scoreManager = ScoreManager.getInstance(this)
         val scores = scoreManager.scores
         if (scores.size < 10 || currentScore > scores.last().scoreValue) {
@@ -222,9 +194,8 @@ class HighScoreActivity : AppCompatActivity(), EasyPermissions.PermissionCallbac
     private fun updateMapWithScores() {
         val scores = ScoreManager.getInstance(this).scores
         if (scores.isNotEmpty()) {
-            googleMap?.clear() // נקה את כל הסימנים הקיימים
+            googleMap?.clear()
             val boundsBuilder = LatLngBounds.Builder()
-
             scores.forEach { score ->
                 val location = LatLng(score.latitude, score.longitude)
                 googleMap?.addMarker(
@@ -235,15 +206,11 @@ class HighScoreActivity : AppCompatActivity(), EasyPermissions.PermissionCallbac
                 )
                 boundsBuilder.include(location)
             }
-
-            // התמקדות על כל השיאים
             val bounds = boundsBuilder.build()
             googleMap?.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100))
-
-            // Listener ללחיצה על סימן במפה
             googleMap?.setOnMarkerClickListener { marker ->
-                marker.showInfoWindow() // מציג מידע נוסף
-                googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.position, 15f)) // מבצע זום למיקום
+                marker.showInfoWindow()
+                googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.position, 15f))
                 SignalManager.getInstance().toast("Clicked on: ${marker.title}")
                 true
             }
@@ -251,7 +218,6 @@ class HighScoreActivity : AppCompatActivity(), EasyPermissions.PermissionCallbac
             SignalManager.getInstance().toast("No scores to display on the map.")
         }
     }
-
 
     private fun debugScores() {
         val scores = ScoreManager.getInstance(this).scores
@@ -262,12 +228,10 @@ class HighScoreActivity : AppCompatActivity(), EasyPermissions.PermissionCallbac
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
-        Log.d("HighScoreActivity", "Permissions denied: $perms")
         SignalManager.getInstance().toast("Permissions denied: $perms")
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
-        Log.d("HighScoreActivity", "Permissions granted: $perms")
         SignalManager.getInstance().toast("Permissions granted: $perms")
     }
 }

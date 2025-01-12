@@ -12,13 +12,13 @@ class ScoreManager private constructor(context: Context) {
     private val gson = Gson()
     private var scoresList: MutableList<Score> = loadScores()
 
-
     val scores: List<Score>
         get() {
             scoresList = loadScores()
             return scoresList
         }
-    fun sortScores() {
+
+    private fun sortScores() {
         scoresList.sortByDescending { it.scoreValue }
     }
 
@@ -31,35 +31,6 @@ class ScoreManager private constructor(context: Context) {
         trimScores()
         saveScores()
     }
-
-//    fun updateScore(newScore: Score) {
-//        val scores = scoresList.toMutableList()
-//        scores.add(newScore)
-//        sortScores()
-//        if (scores.size > 10) {
-//            scoresList = scores.take(10).toMutableList()
-//        } else {
-//            scoresList = scores
-//        }
-//        trimScores()
-//        saveScores()
-//    }
-
-//    fun updateScore(newScore: Score) {
-//        val existingIndex = scoresList.indexOfFirst {
-//            it.latitude == newScore.latitude && it.longitude == newScore.longitude
-//        }
-//        if (existingIndex != -1) {
-//            if (newScore.scoreValue > scoresList[existingIndex].scoreValue) {
-//                scoresList[existingIndex] = newScore
-//            }
-//        } else {
-//            scoresList.add(newScore)
-//        }
-//        sortScores()
-//        trimScores()
-//        saveScores()
-//    }
 
     private fun trimScores() {
         if (scoresList.size > 10) {

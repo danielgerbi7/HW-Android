@@ -5,8 +5,6 @@ class Constants {
     object BundleKeys{
         const val STATUS_KEY :String = "STATUS_KEY"
         const val SCORE_KEY :String = "SCORE_KEY"
-        const val SPEED_KEY :String = "SPEED_KEY"
-        const val SENSOR_CONTROL_KEY = "SENSOR_CONTROL_KEY"
     }
 
     object GameLogic {

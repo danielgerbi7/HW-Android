@@ -13,7 +13,6 @@ import com.example.hw1_daniel_gerbi.model.Score
 class HighScoreAdapter(private var scoreList: MutableList<Score>) :
 
     RecyclerView.Adapter<HighScoreAdapter.ScoreViewHolder>() {
-
     var callback: CallbackHighScoreItemClicked? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScoreViewHolder {
@@ -33,9 +32,6 @@ class HighScoreAdapter(private var scoreList: MutableList<Score>) :
                     append("Score: ")
                     append(scoreValue)
                 }
-//                holder.itemView.setOnClickListener {
-//                    callback?.highScoreItemClicked(latitude, longitude)
-//                }
             }
         }
     }
@@ -52,7 +48,6 @@ class HighScoreAdapter(private var scoreList: MutableList<Score>) :
         init {
             binding.itemCLScore.setOnClickListener {
                 val score = getItem(adapterPosition)
-                Log.d("HighScoreAdapter", "Item clicked: Lat=${score.latitude}, Lon=${score.longitude}")
                 callback?.highScoreItemClicked(score.latitude, score.longitude)
             }
         }
