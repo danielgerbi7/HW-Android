@@ -16,6 +16,7 @@
     <string name="hint">Please Enter Location</string>
     <string name="send">Send</string>
     <string name="string_records">Records</string>
+    <string name="title">title</string>
     <string-array name="Speed">
         <item>Slow</item>
         <item>Normal</item>

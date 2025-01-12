@@ -1,5 +1,7 @@
 package com.example.hw1_daniel_gerbi.adapters
 
+import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,6 +11,7 @@ import com.example.hw1_daniel_gerbi.model.Score
 
 
 class HighScoreAdapter(private var scoreList: MutableList<Score>) :
+
     RecyclerView.Adapter<HighScoreAdapter.ScoreViewHolder>() {
 
     var callback: CallbackHighScoreItemClicked? = null
@@ -30,10 +33,14 @@ class HighScoreAdapter(private var scoreList: MutableList<Score>) :
                     append("Score: ")
                     append(scoreValue)
                 }
+//                holder.itemView.setOnClickListener {
+//                    callback?.highScoreItemClicked(latitude, longitude)
+//                }
             }
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateScores(newScores: List<Score>) {
         scoreList.clear()
         scoreList.addAll(newScores)
@@ -42,6 +49,12 @@ class HighScoreAdapter(private var scoreList: MutableList<Score>) :
 
     inner class ScoreViewHolder(val binding: HighScoreItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
+        init {
+            binding.itemCLScore.setOnClickListener {
+                val score = getItem(adapterPosition)
+                Log.d("HighScoreAdapter", "Item clicked: Lat=${score.latitude}, Lon=${score.longitude}")
+                callback?.highScoreItemClicked(score.latitude, score.longitude)
+            }
+        }
     }
 }
