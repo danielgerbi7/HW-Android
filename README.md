@@ -61,17 +61,19 @@ Welcome to **My Android App**! This is an Android application built with Android
 ## Screenshots
 
 ### Main Menu
-![Main Menu](./Images/Menu.png)
+| <img src="Images/Menu.png" alt="Main Menu - Light Mode" width="300"/> | 
+|-----------------------------------------------------------------------| 
 
 ### Game Screen
-![Game Screen](Images/Game.png)
+| <img src="Images/Game.png" alt="Main Menu - Light Mode" width="300"/> | 
+|-----------------------------------------------------------------------|
 
 ### Settings Screen
-![Settings Screen](Images/Settings.png)
-
+| <img src="Images/Settings.png" alt="Main Menu - Light Mode" width="300"/> | 
+|---------------------------------------------------------------------------|
 ### High Scores and Map Integration
-![High Scores and map Integration](Images/Maps.png)
-
+| <img src="Images/Maps.png" alt="Main Menu - Light Mode" width="300"/> | 
+|-----------------------------------------------------------------------|
 
 
 ## Author
